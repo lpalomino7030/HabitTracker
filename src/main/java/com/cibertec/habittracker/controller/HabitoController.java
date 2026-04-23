@@ -27,6 +27,7 @@ public class HabitoController {
 
         model.addAttribute("habitos", habitoService.listar());
         model.addAttribute("habito", new Habito());
+        model.addAttribute("totalHabitos", habitoService.contarHabitos());
         return "habitos/lista";
     }
 

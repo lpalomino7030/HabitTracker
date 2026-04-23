@@ -1,79 +1,38 @@
 <!doctype html>
-<html
-  lang="es"
-  xmlns:th="http://www.thymeleaf.org"
-  th:replace="layout :: layout (~{::title}, ~{::section})"
->
-  <head>
-    <title>Hábitos</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-  </head>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout (~{::title}, ~{::section})">
 
-  <body>
-    <section>
-      <div class="d-flex justify-content-between mb-3">
+<head>
+  <title>Hábitos</title>
+
+</head>
+
+<body>
+  <section class="HabitView">
+    <div class="HabitListBox">
+      <div class="tituloLista">
         <h3>Mis Hábitos</h3>
         <a th:href="@{/habitos/nuevo}" class="btn btn-primary">
           Nuevo hábito
         </a>
       </div>
 
-      <!-- <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="h : ${habitos}">
-            <td th:text="${h.nombre}"></td>
-            <td th:text="${h.descripcion}"></td>
-            <td>
-              <a
-                th:href="@{/habitos/marcar/{id}(id=${h.id})}"
-                class="btn btn-success btn-sm"
-              >
-                Marcar hoy
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
-
       <div class="panelHabits" th:each="h : ${habitos}">
         <div class="habiTrackerItem">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-sport-shoe-icon lucide-sport-shoe"
-            >
+          <div class="iconHabit">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-sport-shoe-icon lucide-sport-shoe">
               <path d="m15 10.42 4.8-5.07" />
               <path d="M19 18h3" />
               <path
-                d="M9.5 22 21.414 9.415A2 2 0 0 0 21.2 6.4l-5.61-4.208A1 1 0 0 0 14 3v2a2 2 0 0 1-1.394 1.906L8.677 8.053A1 1 0 0 0 8 9c-.155 6.393-2.082 9-4 9a2 2 0 0 0 0 4h14"
-              />
+                d="M9.5 22 21.414 9.415A2 2 0 0 0 21.2 6.4l-5.61-4.208A1 1 0 0 0 14 3v2a2 2 0 0 1-1.394 1.906L8.677 8.053A1 1 0 0 0 8 9c-.155 6.393-2.082 9-4 9a2 2 0 0 0 0 4h14" />
             </svg>
           </div>
           <div class="habitTitle">
             <p th:text="${h.nombre}"></p>
             <p th:text="${h.descripcion}"></p>
           </div>
-          <div>
+          <div class="daysCount">
             <p>12</p>
             <p>Dias</p>
           </div>
@@ -109,59 +68,83 @@
             </div>
           </div>
           <div>
-            <a
-              th:href="@{/habitos/marcar/{id}(id=${h.id})}"
-              class="btn btn-success btn-sm"
-            >
+            <a th:href="@{/habitos/marcar/{id}(id=${h.id})}" class="btn btn-success btn-sm">
               Marcar hoy
             </a>
           </div>
         </div>
       </div>
-
-      <!-- Modal crear hábito -->
-      <div class="modal fade" id="modalCrear" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form th:action="@{/habitos/crear}" method="post">
-              <div class="modal-header">
-                <h5 class="modal-title">Nuevo hábito</h5>
-              </div>
-
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label>Nombre</label>
-                  <input
-                    type="text"
-                    name="nombre"
-                    class="form-control"
-                    required
-                  />
-                </div>
-
-                <div class="mb-3">
-                  <label>Descripción</label>
-                  <input type="text" name="descripcion" class="form-control" />
-                </div>
-              </div>
-
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
+    </div>
+    <div>
+      <div class="CalendarBox">
+        <div class="calendarTittle">
+          <strong>
+            Calendario
+          </strong>
+          <div class="Mes">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-chevron-left-icon lucide-chevron-left">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            <p>Abril</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-chevron-right-icon lucide-chevron-right">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+        
+          <ul class="dayscount">
+            <!-- 30 días -->
+            <li class="empty"></li>
+            <li class="empty"></li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+            <li>14</li>
+
+            <li>15</li>
+            <li>16</li>
+            <li>17</li>
+            <li>18</li>
+            <li>19</li>
+            <li>20</li>
+            <li>21</li>
+
+            <li>22</li>
+            <li>23</li>
+            <li>24</li>
+            <li>25</li>
+            <li>26</li>
+            <li>27</li>
+            <li>28</li>
+
+            <li>29</li>
+            <li>30</li>
+          </ul>
+        
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+</body>
+
 </html>

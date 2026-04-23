@@ -29,6 +29,10 @@ public class HabitoService {
         return habitoRepository.findById(id).orElseThrow();
     }
 
+    public Integer contarHabitos() {
+        return (int) habitoRepository.count();
+    }
+
     public void eliminar(Long id) {
         habitoRepository.deleteById(id);
     }
