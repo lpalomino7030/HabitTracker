@@ -1,6 +1,7 @@
 package com.cibertec.habittracker.service;
 
 
+import com.cibertec.habittracker.model.DTO.DiaEstado;
 import com.cibertec.habittracker.model.Habito;
 import com.cibertec.habittracker.model.HabitoRegistrado;
 import com.cibertec.habittracker.repository.HabitoRegistradoRepository;
@@ -8,8 +9,11 @@ import com.cibertec.habittracker.repository.HabitoRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HabitoRegistradoService {
@@ -28,19 +32,58 @@ public class HabitoRegistradoService {
 
         if(existente.isPresent()){
             HabitoRegistrado log = existente.get();
-            log.setCompletado(!log.getCompletado());
+            log.setCompletado(true);
             registroRepository.save(log);
         } else {
             Habito habito = habitoRepository.findById(habitoId).orElseThrow();
 
             HabitoRegistrado nuevo = new HabitoRegistrado();
+            nuevo.setHabito(habito);
             nuevo.setFecha(hoy);
             nuevo.setCompletado(true);
-            nuevo.setHabito(habito);
 
-            registroRepository.save(nuevo);
+
+            HabitoRegistrado guardado = registroRepository.save(nuevo);
+            System.out.println("ID guardado: " + guardado.getId());
         }
 
+    }
+
+    public List<DiaEstado> obtenerSemana(Long habitoId) {
+
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicio = hoy.minusDays(6);
+
+        List<HabitoRegistrado> registros =
+                registroRepository.findByHabitoIdAndFechaBetween(habitoId, inicio, hoy);
+
+        Map<LocalDate, Boolean> mapa = registros.stream()
+                .collect(Collectors.toMap(
+                        HabitoRegistrado::getFecha,
+                        HabitoRegistrado::getCompletado
+                ));
+
+        List<DiaEstado> resultado = new ArrayList<>();
+
+        for (int i = 6; i >= 0; i--) {
+            LocalDate fecha = hoy.minusDays(i);
+
+            boolean estado = mapa.getOrDefault(fecha, false);
+
+            String dia = switch (fecha.getDayOfWeek()) {
+                case MONDAY -> "L";
+                case TUESDAY -> "M";
+                case WEDNESDAY -> "X";
+                case THURSDAY -> "J";
+                case FRIDAY -> "V";
+                case SATURDAY -> "S";
+                case SUNDAY -> "D";
+            };
+
+            resultado.add(new DiaEstado(dia, estado));
+        }
+
+        return resultado;
     }
 
     public int calcularLaRacha(Long habitoId){
@@ -60,5 +103,27 @@ public class HabitoRegistradoService {
         }
         return racha;
     }
+
+    public List<Integer> obtenerDiasMarcadosDelMes(Long habitoId) {
+
+        LocalDate hoy = LocalDate.now();
+
+        LocalDate inicioMes = hoy.withDayOfMonth(1);
+        LocalDate finMes = hoy.withDayOfMonth(hoy.lengthOfMonth());
+
+        List<HabitoRegistrado> registros =
+                registroRepository.findByHabitoIdAndFechaBetween(habitoId, inicioMes, finMes);
+
+        List<Integer> dias = new ArrayList<>();
+
+        for (HabitoRegistrado r : registros) {
+            if (r.getCompletado()) {
+                dias.add(r.getFecha().getDayOfMonth());
+            }
+        }
+
+        return dias;
+    }
+
 
 }

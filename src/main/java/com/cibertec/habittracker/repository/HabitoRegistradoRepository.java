@@ -13,4 +13,10 @@ public interface HabitoRegistradoRepository extends JpaRepository<HabitoRegistra
     Optional<HabitoRegistrado> findByHabitoIdAndFecha(Long habitoId, LocalDate fecha);
 
     List<HabitoRegistrado> findByHabitoIdOrderByFechaDesc(Long habitoId);
+    List<HabitoRegistrado> findByHabitoIdAndFechaBetween(
+            Long habitoId,
+            LocalDate inicio,
+            LocalDate fin
+    );
+
 }

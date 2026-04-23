@@ -10,7 +10,7 @@ public class Habito {
 
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 private String nombre;
 private String descripcion;
 private LocalDate fechaCreacion;
@@ -20,7 +20,7 @@ private LocalDate fechaCreacion;
     public Habito() {
     }
 
-    public Habito(Integer id, String nombre, String descripcion, LocalDate fechaCreacion, List<HabitoRegistrado> registros) {
+    public Habito(Long id, String nombre, String descripcion, LocalDate fechaCreacion, List<HabitoRegistrado> registros) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -28,11 +28,11 @@ private LocalDate fechaCreacion;
         this.registros = registros;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

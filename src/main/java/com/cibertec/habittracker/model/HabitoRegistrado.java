@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 @Entity
 @Table(
-        name = "habitoRegistrado",
+        name = "habito_Registrado",
         uniqueConstraints = @UniqueConstraint(columnNames = {"habito_id", "fecha"})
 )
 public class HabitoRegistrado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private LocalDate fecha;
     private Boolean completado;
     @ManyToOne
@@ -22,18 +22,18 @@ public class HabitoRegistrado {
     public HabitoRegistrado() {
     }
 
-    public HabitoRegistrado(Integer id, LocalDate fecha, Boolean completado, Habito habito) {
+    public HabitoRegistrado(Long id, LocalDate fecha, Boolean completado, Habito habito) {
         this.id = id;
         this.fecha = fecha;
         this.completado = completado;
         this.habito = habito;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
