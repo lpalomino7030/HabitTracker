@@ -11,9 +11,9 @@ public class Habito {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-private String nombre;
-private String descripcion;
-private LocalDate fechaCreacion;
+    private String nombre;
+    private String descripcion;
+    private LocalDate fechaCreacion;
     @OneToMany(mappedBy = "habito", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HabitoRegistrado> registros;
 

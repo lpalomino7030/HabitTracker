@@ -60,7 +60,7 @@
       <div class="sidebar bg-blue">
         <ul>
           <li>
-            <a class="">
+            <a th:href="@{/habitos}" class="">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -82,7 +82,7 @@
             </a>
           </li>
           <li>
-            <a>
+            <a th:href="@{/habitos/lista}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -107,7 +107,7 @@
             </a>
           </li>
           <li>
-            <a>
+            <a th:href="@{/habitos/calendar}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -135,7 +135,7 @@
             </a>
           </li>
           <li>
-            <a>
+            <a th:href="@{/habitos/stats}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -161,7 +161,7 @@
             </a>
           </li>
           <li>
-            <a>
+            <a th:href="@{/habitos/history}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -182,7 +182,7 @@
             </a>
           </li>
           <li>
-            <a>
+            <a th:href="@{/habitos/config}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -266,7 +266,7 @@
             </div>
             <div class="contentCardItem">
               <p>Racha Actual</p>
-              <strong>2 días</strong>
+              <strong th:text="${rachaActual}"></strong>
               <small class="green">! sigue asi ¡</small>
             </div>
           </div>
@@ -301,7 +301,7 @@
             </div>
             <div class="contentCardItem">
               <p>Mejor Racha</p>
-              <strong>5 días</strong>
+              <strong th:text="${mejorRacha}"></strong>
               <small class="gray">Todo un record</small>
             </div>
           </div>
@@ -338,18 +338,6 @@
     </div>
 
     <script th:replace="${script}"></script>
-    <!-- <script>
-      document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("btn-marcar")) {
-          e.preventDefault();
 
-          const id = e.target.getAttribute("data-id");
-
-          fetch(`/habitos/marcar/${id}`).then(() => {
-            console.log("ok");
-          });
-        }
-      });
-    </script> -->
   </body>
 </html>

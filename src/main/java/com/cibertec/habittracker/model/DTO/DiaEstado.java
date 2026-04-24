@@ -1,7 +1,7 @@
 package com.cibertec.habittracker.model.DTO;
 
 public class DiaEstado {
-    private String dia; // L, M, X...
+    private String dia;
     private boolean completado;
 
     public DiaEstado(String dia, boolean completado) {

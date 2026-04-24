@@ -2,6 +2,7 @@ package com.cibertec.habittracker.repository;
 
 import com.cibertec.habittracker.model.HabitoRegistrado;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -19,4 +20,12 @@ public interface HabitoRegistradoRepository extends JpaRepository<HabitoRegistra
             LocalDate fin
     );
 
+    @Query("""
+SELECT COUNT(r)
+FROM HabitoRegistrado r
+WHERE r.habito.id = :habitoId
+AND r.completado = true
+AND r.fecha >= :fechaInicio
+""")
+    int contarCompletadosSemana(Long habitoId, LocalDate fechaInicio);
 }

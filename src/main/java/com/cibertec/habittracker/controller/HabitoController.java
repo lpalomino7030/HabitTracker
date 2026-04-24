@@ -27,17 +27,30 @@ public class HabitoController {
 
         List<Habito> habitos = habitoService.listar();
         List<Integer> dias = habitoService.diasDelMes();
+        Integer majorRacha = registroService.mejorRacha();
+        Integer rachaActual = registroService.obtenerMayorRachaActual();
+
+
         Map<Long, List<DiaEstado>> semanas = new HashMap<>();
         for (Habito h : habitos) {
             semanas.put(h.getId(), registroService.obtenerSemana(h.getId().longValue()));
         }
 
+        Map<Long, Double> porcentajes = new HashMap<>();
 
+        for (Habito h : habitos) {
+            porcentajes.put(h.getId(), registroService.porcentajeSemanal(h.getId()));
+        }
+
+        model.addAttribute("porcentajes", porcentajes);
         model.addAttribute("habitos", habitos);
         model.addAttribute("semanas", semanas);
         model.addAttribute("habito", new Habito());
         model.addAttribute("totalHabitos", habitoService.contarHabitos());
         model.addAttribute("diasMes", dias);
+        model.addAttribute("mejorRacha", majorRacha);
+        model.addAttribute("rachaActual", rachaActual);
+
         Set<Integer> diasUnicos = new HashSet<>();
 
         for (Habito h : habitos) {
@@ -63,19 +76,7 @@ public class HabitoController {
         return "redirect:/habitos";
     }
 
-//    @GetMapping("/marcar/{id}")
-//    public String marcar(@PathVariable Long id) {
-//        System.out.println(id);
-//        registroService.marcarHoy(id);
-//        return "redirect:/habitos";
-//    }
 
-//        @GetMapping("/marcar/{id}")
-//        @ResponseBody
-//        public String marcar(@PathVariable Long id) {
-//            registroService.marcarHoy(id);
-//            return "ok";
-//        }
 
     @GetMapping("/marcar/{id}")
     @ResponseBody

@@ -105,9 +105,9 @@
           </a>
         </div>
 
-        <div class="panelHabits" th:each="h : ${habitos}">
+        <div class="panelHabits" th:each="h, iter : ${habitos}">
           <div class="habiTrackerItem">
-            <div class="iconHabit">
+            <div class="iconHabit"  th:classappend="' color-' + ${iter.index}">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -144,9 +144,6 @@
               </div>
             </div>
             <div>
-              <!--            <a th:href="@{/habitos/marcar/{id}(id=${h.id})}" class="btn btn-success btn-sm">-->
-              <!--              Marcar hoy-->
-              <!--            </a>-->
               <a
                 href="#"
                 th:attr="data-id=${h.id}"
@@ -198,16 +195,24 @@
           <ul class="dayscount">
             <li class="empty"></li>
             <li class="empty"></li>
-
-            <!--          <li th:each="dia : ${diasMes}"-->
-            <!--              th:text="${dia}">-->
-            <!--          </li>-->
             <li
               th:each="dia : ${diasMes}"
               th:text="${dia}"
               th:classappend="${diasMarcados.contains(dia)} ? 'activo' : ''"
             ></li>
           </ul>
+        </div>
+        <div class="progressBox" th:each="h : ${habitos}">
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              th:style="'width:' + ${porcentajes[h.id]} + '%'"
+            >
+              <small class="notihabit" th:text="${h.nombre}"></small>
+
+              <small th:text="${#numbers.formatDecimal(porcentajes[h.id], 1, 0)} + '%'" ></small>
+            </div>
+          </div>
         </div>
       </div>
     </section>

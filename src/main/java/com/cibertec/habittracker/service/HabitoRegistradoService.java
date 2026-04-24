@@ -103,6 +103,37 @@ public class HabitoRegistradoService {
         }
         return racha;
     }
+    public int mejorRacha() {
+        List<Habito> habitos = habitoRepository.findAll();
+
+        int mayorRacha = 0;
+
+        for (Habito h : habitos) {
+            int racha = calcularLaRacha(h.getId());
+
+            if (racha > mayorRacha) {
+                mayorRacha = racha;
+            }
+        }
+
+        return mayorRacha;
+    }
+
+    public int obtenerMayorRachaActual() {
+        List<Habito> habitos = habitoRepository.findAll();
+
+        int mayor = 0;
+
+        for (Habito h : habitos) {
+            int racha = calcularLaRacha(h.getId());
+
+            if (racha > mayor) {
+                mayor = racha;
+            }
+        }
+
+        return mayor;
+    }
 
     public List<Integer> obtenerDiasMarcadosDelMes(Long habitoId) {
 
@@ -125,5 +156,13 @@ public class HabitoRegistradoService {
         return dias;
     }
 
+    public double porcentajeSemanal(Long habitoId) {
+        LocalDate hoy = LocalDate.now();
+        LocalDate inicioSemana = hoy.minusDays(6);
+
+        int completados = registroRepository.contarCompletadosSemana(habitoId, inicioSemana);
+
+        return (completados / 7.0) * 100;
+    }
 
 }
