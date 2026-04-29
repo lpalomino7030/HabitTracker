@@ -17,8 +17,8 @@ public class HabitoService {
         this.habitoRepository = habitoRepository;
     }
 
-    public List<Habito> listar() {
-        return habitoRepository.findAll();
+    public List<Habito> listarPorUsuario(String username) {
+        return habitoRepository.findByUsuarioNombreUsuario(username);
     }
 
     public Habito guardar(Habito habito)  {
@@ -50,4 +50,6 @@ public class HabitoService {
     public void eliminar(Long id) {
         habitoRepository.deleteById(id);
     }
+
+
 }

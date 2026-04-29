@@ -2,8 +2,11 @@ package com.cibertec.habittracker.controller;
 
 import com.cibertec.habittracker.model.DTO.DiaEstado;
 import com.cibertec.habittracker.model.Habito;
+import com.cibertec.habittracker.model.Usuario;
 import com.cibertec.habittracker.service.HabitoRegistradoService;
 import com.cibertec.habittracker.service.HabitoService;
+import com.cibertec.habittracker.service.UsuarioService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,17 +19,19 @@ public class HabitoController {
 
     private final HabitoService habitoService;
     private final HabitoRegistradoService registroService;
+private final UsuarioService usuarioService;
 
-    public HabitoController(HabitoService habitoService, HabitoRegistradoService registroService) {
+    public HabitoController(HabitoService habitoService, HabitoRegistradoService registroService, UsuarioService usuarioService) {
         this.habitoService = habitoService;
         this.registroService = registroService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,  Authentication auth) {
+        String username = auth.getName();
 
-        List<Habito> habitos = habitoService.listar();
-        List<Integer> dias = habitoService.diasDelMes();
+        List<Habito> habitos = habitoService.listarPorUsuario(username);        List<Integer> dias = habitoService.diasDelMes();
         Integer majorRacha = registroService.mejorRacha();
         Integer rachaActual = registroService.obtenerMayorRachaActual();
 
@@ -71,8 +76,16 @@ public class HabitoController {
     }
 
     @PostMapping("/crear")
-    public String crear(Habito habito) {
+    public String crear(Habito habito, Authentication auth) {
+
+        String username = auth.getName();
+
+        Usuario usuario = usuarioService.obtenerUsuarioByNomusuario(username);
+
+        habito.setUsuario(usuario);
+
         habitoService.guardar(habito);
+
         return "redirect:/habitos";
     }
 

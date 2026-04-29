@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @GetMapping
-    public String redirigir(){
-        return "redirect:/habitos";
+    public String redirigir() {
+        return "redirect:/auth/login";
     }
 }

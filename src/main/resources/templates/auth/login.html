@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Habit Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" />
+</head>
+
+<body style="background: #151e3b; display:flex; align-items:center; justify-content:center; height:100vh;">
+
+<div style="background:white; padding:30px; border-radius:12px; width:350px; box-shadow:0px 10px 20px rgba(0,0,0,0.2);">
+
+    <div style="text-align:center; margin-bottom:20px;">
+        <h2>Habit Tracker</h2>
+        <small>Inicia sesión para continuar</small>
+    </div>
+
+    <!-- ERROR -->
+    <div th:if="${param.error}" style="color:red; margin-bottom:10px;">
+        Usuario o contraseña incorrectos
+    </div>
+
+    <!-- LOGOUT -->
+    <div th:if="${param.logout}" style="color:green; margin-bottom:10px;">
+        Sesión cerrada correctamente
+    </div>
+
+    <form th:action="@{/auth/login}" method="post">
+
+        <div class="mb-3">
+            <label>Usuario</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label>Contraseña</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-success" style="width:100%;">
+            Iniciar sesión
+        </button>
+
+    </form>
+
+    <div style="margin-top:15px; text-align:center;">
+        <a th:href="@{/security/user/create}" class="btn btn-primary">
+            Crear cuenta
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
