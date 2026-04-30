@@ -43,8 +43,10 @@ public class HabitoService {
         return habitoRepository.findById(id).orElseThrow();
     }
 
-    public Integer contarHabitos() {
-        return (int) habitoRepository.count();
+    public Integer contarHabitos(String username) {
+        return habitoRepository
+                .findByUsuarioNombreUsuario(username)
+                .size();
     }
 
     public void eliminar(Long id) {

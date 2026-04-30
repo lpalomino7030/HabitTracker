@@ -14,6 +14,7 @@ public class UsuarioDetalleService implements UserDetailsService {
     private final UsuarioService usuarioService;
 
     public UsuarioDetalleService(UsuarioService usuarioService) {
+
         this.usuarioService = usuarioService;
     }
 
@@ -21,6 +22,15 @@ public class UsuarioDetalleService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Usuario usuario = usuarioService.obtenerUsuarioByNomusuario(username);
+        System.out.println("LOGIN: " + username);
+
+
+        if (usuario == null) {
+            System.out.println("USUARIO NO ENCONTRADO");
+        } else {
+            System.out.println("USUARIO OK: " + usuario.getNombreUsuario());
+            System.out.println(usuario.getContrasena());
+        }
 
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");

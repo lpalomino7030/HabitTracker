@@ -42,8 +42,7 @@ public class SecurityController {
     public String register(@ModelAttribute
                            RegistroUsuarioDto user){
         usuarioService.registrarUsuario(user);
-        return "redirect:/security/user";
-    }
+        return "redirect:/login?registered";    }
 
 }
 

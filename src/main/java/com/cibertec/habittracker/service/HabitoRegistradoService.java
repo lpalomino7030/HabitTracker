@@ -26,27 +26,33 @@ public class HabitoRegistradoService {
         this.habitoRepository = habitoRepository;
     }
 
-    public void marcarHoy(Long habitoId){
+    public void marcarHoy(Long habitoId, String username){
+
+        Habito habito = habitoRepository
+                .findById(habitoId)
+                .orElseThrow();
+
+        if (!habito.getUsuario().getNombreUsuario().equals(username)) {
+            throw new RuntimeException("Acceso no autorizado");
+        }
+
         LocalDate hoy = LocalDate.now();
-        Optional<HabitoRegistrado> existente = registroRepository.findByHabitoIdAndFecha(habitoId, hoy);
+
+        Optional<HabitoRegistrado> existente =
+                registroRepository.findByHabitoIdAndFecha(habitoId, hoy);
 
         if(existente.isPresent()){
             HabitoRegistrado log = existente.get();
             log.setCompletado(true);
             registroRepository.save(log);
         } else {
-            Habito habito = habitoRepository.findById(habitoId).orElseThrow();
-
             HabitoRegistrado nuevo = new HabitoRegistrado();
             nuevo.setHabito(habito);
             nuevo.setFecha(hoy);
             nuevo.setCompletado(true);
 
-
-            HabitoRegistrado guardado = registroRepository.save(nuevo);
-            System.out.println("ID guardado: " + guardado.getId());
+            registroRepository.save(nuevo);
         }
-
     }
 
     public List<DiaEstado> obtenerSemana(Long habitoId) {
@@ -103,8 +109,10 @@ public class HabitoRegistradoService {
         }
         return racha;
     }
-    public int mejorRacha() {
-        List<Habito> habitos = habitoRepository.findAll();
+    public int mejorRacha(String username) {
+
+        List<Habito> habitos =
+                habitoRepository.findByUsuarioNombreUsuario(username);
 
         int mayorRacha = 0;
 
@@ -118,9 +126,8 @@ public class HabitoRegistradoService {
 
         return mayorRacha;
     }
-
-    public int obtenerMayorRachaActual() {
-        List<Habito> habitos = habitoRepository.findAll();
+    public int obtenerMayorRachaActual(String username) {
+        List<Habito> habitos = habitoRepository.findByUsuarioNombreUsuario(username);
 
         int mayor = 0;
 

@@ -18,28 +18,50 @@ public class SecurityConfig {
     public SecurityConfig(UsuarioDetalleService usuarioDetalleService) {
         this.usuarioDetalleService = usuarioDetalleService;
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/security/user/create", "/security/user/register").permitAll()
+                        .requestMatchers(
+                                "/login",
+                                "/auth/login",
+                                "/security/user/create",
+                                "/security/user/register",
+                                "/css/**",
+                                "/js/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/auth/login")
-                        .loginProcessingUrl("/auth/login") // coincide con el form
+                        .loginPage("/login")               // tu vista login.html
+                        .loginProcessingUrl("/auth/login") // el POST del form
                         .defaultSuccessUrl("/habitos", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/auth/login?logout")
-                        .permitAll()
-                )
-                .userDetailsService(usuarioDetalleService);
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                );
 
         return http.build();
+    }
+
+    @Bean
+    public org.springframework.security.authentication.AuthenticationManager authenticationManager(
+            HttpSecurity http,
+            PasswordEncoder passwordEncoder,
+            UsuarioDetalleService userDetailsService
+    ) throws Exception {
+
+        var builder = http.getSharedObject(
+                org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder.class
+        );
+
+        builder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
+
+        return builder.build();
     }
 
     @Bean

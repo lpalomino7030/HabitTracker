@@ -47,6 +47,7 @@ public class UsuarioService {
             dto.setIdusuario(usuario.getId());
             dto.setNombres(usuario.getNombreUsuario());
             dto.setNombres(usuario.getNombres());
+
             dto.setEmail(usuario.getEmail());
             return dto;
 
@@ -56,7 +57,10 @@ return null;
     }
 
     public Usuario obtenerUsuarioByNomusuario(String nomusuario){
+
+
         return usuarioRepository.findByNombreUsuario(nomusuario);
+
     }
 
     @Transactional
