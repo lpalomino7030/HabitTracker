@@ -39,7 +39,7 @@ a {
   padding: 16px;
 }
 
-.sidebar > a {
+.sidebar>a {
   padding: 5px;
 }
 
@@ -80,9 +80,11 @@ ul li a {
 .bg-blue {
   background: #151e3b;
 }
+
 .iconcardItem {
   width: 30%;
 }
+
 .navbar {
   border-bottom: 1px solid #ccc;
 }
@@ -128,12 +130,14 @@ ul li a {
   width: 70%;
   /* gap: 5px; */
 }
+
 .contentCardItem strong {
   font-size: 24px;
   font-family: "Nunito", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
+
 .panelHabits {
   display: flex;
   flex-direction: column;
@@ -260,7 +264,7 @@ ul li a {
   height: 40px;
   width: 40px;
   border-radius: 50%;
-    /* background-color: #85c1ea; */
+  /* background-color: #85c1ea; */
 }
 
 .daysCount {
@@ -299,7 +303,8 @@ ul li a {
 
 .dayscount {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 días por fila */
+  grid-template-columns: repeat(7, 1fr);
+  /* 7 días por fila */
   gap: 8px;
 
   list-style: none;
@@ -334,6 +339,7 @@ ul li a {
   background-color: #2ecc71;
   color: white;
 }
+
 .empty {
   background: transparent;
   pointer-events: none;
@@ -364,6 +370,7 @@ ul li a {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -394,13 +401,18 @@ ul li a {
 .green {
   color: #2ecc71;
 }
-
+.informacionHabits{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .progressBox {
   width: 100%;
   min-height: 50px;
   background: white;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding: 1px;
   gap: 8px;
 }
 
@@ -426,17 +438,91 @@ ul li a {
 
 /* colores de habitos */
 
-.color-0 { background-color: #85c1ea; }
-.color-1 { background-color: #2ecc71; }
-.color-2 { background-color: #c799dd; }
-.color-3 { background-color: #ec5555; }
-.color-4 { background-color: #69ddc4; }
-.color-5 { background-color: #ea85d9; }
-.color-6 { background-color: #ecea6b; }
-.color-7 { background-color: #ddc299; }
-.color-8 { background-color: #ec5555; }
-.color-9 { background-color: #b4dd69; }
+.color-0 {
+  background-color: #85c1ea;
+}
+
+.color-1 {
+  background-color: #2ecc71;
+}
+
+.color-2 {
+  background-color: #c799dd;
+}
+
+.color-3 {
+  background-color: #ec5555;
+}
+
+.color-4 {
+  background-color: #69ddc4;
+}
+
+.color-5 {
+  background-color: #ea85d9;
+}
+
+.color-6 {
+  background-color: #ecea6b;
+}
+
+.color-7 {
+  background-color: #ddc299;
+}
+
+.color-8 {
+  background-color: #ec5555;
+}
+
+.color-9 {
+  background-color: #b4dd69;
+}
 
 
 
+.login-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
 
+.login-container {
+  background: #151e3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.outUser {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-direction: row;
+
+}
+
+.navTittle {
+  display: flex;
+  flex: 1;
+  gap: 10px;
+  align-items: center;
+}
+
+
+.salirbtn {
+  display: flex;
+  border: 2px solid #ec5555;
+  color: #ec5555;
+  padding: 3px 12px;
+  border-radius: 8px;
+}
+
+.salirbtn button {
+  background: transparent;
+  border: none;
+  color: #ec5555;
+  cursor: pointer;
+}

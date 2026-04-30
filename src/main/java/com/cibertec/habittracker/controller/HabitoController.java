@@ -1,9 +1,13 @@
 package com.cibertec.habittracker.controller;
 
 import com.cibertec.habittracker.model.DTO.DiaEstado;
+import com.cibertec.habittracker.model.DTO.HabitoUpdateResponse;
 import com.cibertec.habittracker.model.Habito;
+import com.cibertec.habittracker.model.Usuario;
 import com.cibertec.habittracker.service.HabitoRegistradoService;
 import com.cibertec.habittracker.service.HabitoService;
+import com.cibertec.habittracker.service.UsuarioService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,19 +20,21 @@ public class HabitoController {
 
     private final HabitoService habitoService;
     private final HabitoRegistradoService registroService;
+private final UsuarioService usuarioService;
 
-    public HabitoController(HabitoService habitoService, HabitoRegistradoService registroService) {
+    public HabitoController(HabitoService habitoService, HabitoRegistradoService registroService, UsuarioService usuarioService) {
         this.habitoService = habitoService;
         this.registroService = registroService;
+        this.usuarioService = usuarioService;
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model,  Authentication auth) {
+        String username = auth.getName();
 
-        List<Habito> habitos = habitoService.listar();
-        List<Integer> dias = habitoService.diasDelMes();
-        Integer majorRacha = registroService.mejorRacha();
-        Integer rachaActual = registroService.obtenerMayorRachaActual();
+        List<Habito> habitos = habitoService.listarPorUsuario(username);        List<Integer> dias = habitoService.diasDelMes();
+        Integer majorRacha = registroService.mejorRacha(username);
+        Integer rachaActual = registroService.obtenerMayorRachaActual(username);
 
 
         Map<Long, List<DiaEstado>> semanas = new HashMap<>();
@@ -41,12 +47,12 @@ public class HabitoController {
         for (Habito h : habitos) {
             porcentajes.put(h.getId(), registroService.porcentajeSemanal(h.getId()));
         }
-
-        model.addAttribute("porcentajes", porcentajes);
+        model.addAttribute("usuario",
+                usuarioService.obtenerUsuarioByNomusuario(auth.getName()));        model.addAttribute("porcentajes", porcentajes);
         model.addAttribute("habitos", habitos);
         model.addAttribute("semanas", semanas);
         model.addAttribute("habito", new Habito());
-        model.addAttribute("totalHabitos", habitoService.contarHabitos());
+        model.addAttribute("totalHabitos", habitoService.contarHabitos(username));
         model.addAttribute("diasMes", dias);
         model.addAttribute("mejorRacha", majorRacha);
         model.addAttribute("rachaActual", rachaActual);
@@ -65,25 +71,53 @@ public class HabitoController {
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model, Authentication auth) {
+
+        String username = auth.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioByNomusuario(username);
+
+        model.addAttribute("usuario", usuario);
         model.addAttribute("habito", new Habito());
+
         return "habitos/crear";
     }
 
     @PostMapping("/crear")
-    public String crear(Habito habito) {
+    public String crear(Habito habito, Authentication auth) {
+
+        String username = auth.getName();
+
+        Usuario usuario = usuarioService.obtenerUsuarioByNomusuario(username);
+
+        habito.setUsuario(usuario);
+
         habitoService.guardar(habito);
+
         return "redirect:/habitos";
     }
 
 
 
-    @GetMapping("/marcar/{id}")
+    @PostMapping("/marcar/{id}")
     @ResponseBody
-    public List<DiaEstado> marcar(@PathVariable Long id) {
-        registroService.marcarHoy(id);
-        return registroService.obtenerSemana(id);
+    public HabitoUpdateResponse marcar(@PathVariable Long id, Authentication auth) {
+
+        String username = auth.getName();
+
+        registroService.marcarHoy(id, username);
+
+        HabitoUpdateResponse response = new HabitoUpdateResponse();
+
+        response.setSemana(registroService.obtenerSemana(id));
+        response.setDiasMarcados(registroService.obtenerDiasMarcadosDelMes(id));
+        response.setPorcentaje(registroService.porcentajeSemanal(id));
+
+        return response;
     }
+
+
+
+
 
 }
 

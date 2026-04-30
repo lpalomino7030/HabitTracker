@@ -8,13 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-
     Usuario findByNombreUsuario(String nombreUsuario);
-
     @Modifying
     @Query(value = """
     UPDATE usuario SET nombres=:nombres

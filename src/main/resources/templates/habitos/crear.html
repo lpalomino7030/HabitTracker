@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout :: layout (~{::title}, ~{::section}, ~{})">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout (~{::title}, ~{::section}, ~{})">
 
 <head>
     <title>Crear hábito</title>
 </head>
 
 <body>
-<section>
+    <section>
 
-    <h2>Crear nuevo hábito</h2>
+        <h2>Crear nuevo hábito</h2>
 
-    <form th:action="@{/habitos/crear}" method="post" th:object="${habito}">
+        <form th:action="@{/habitos/crear}" method="post" th:object="${habito}">
 
-        <div class="mb-3">
-            <label>Nombre</label>
-            <input type="text" th:field="*{nombre}" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label>Descripción</label>
-            <input type="text" th:field="*{descripcion}" class="form-control">
-        </div>
+            <div class="mb-3">
+                <label>Descripción</label>
+                <input type="text" th:field="*{descripcion}" class="form-control">
+            </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
-        <a th:href="@{/habitos}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a th:href="@{/habitos}" class="btn btn-secondary">Cancelar</a>
 
-    </form>
+        </form>
 
-</section>
+    </section>
 </body>
+
 </html>
