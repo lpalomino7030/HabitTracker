@@ -16,7 +16,7 @@ public class Usuario {
     private String nombreUsuario;
     private String contrasena;
 
-    @OneToMany(mappedBy = "habitos", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Habito> habitos;
 
     public Usuario() {}

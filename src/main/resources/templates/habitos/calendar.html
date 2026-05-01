@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+  th:replace="layout :: layout (~{::title}, ~{::section}, ~{::script})">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Calendar</title>
 </head>
-<body>
-$END$
+
+<body class="calendar-full-body">
+
+  <section class="calendar-full-container">
+
+    <div class="calendar-full-header">
+      <strong>Calendario</strong>
+      <p th:text="${mes}">Abril</p>
+    </div>
+
+    <!-- space  mi grid -->
+
+    <div class="calendar-full-box">
+      <div class="calendar-full-weekdays">
+        <span th:each="d : ${diasSemana}" th:text="${d}"></span>
+      </div>
+
+      <ul class="calendar-full-grid">
+
+
+        <li th:each="i : ${#numbers.sequence(1, offset)}" class="calendar-full-empty"></li>
+
+
+        <li th:each="dia : ${diasMes}" th:text="${dia}"
+          th:classappend="${diasMarcados.contains(dia)} ? 'calendar-full-active' : ''">
+        </li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <script></script>
 </body>
+
 </html>

@@ -13,6 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("habitos")
@@ -32,7 +37,8 @@ private final UsuarioService usuarioService;
     public String listar(Model model,  Authentication auth) {
         String username = auth.getName();
 
-        List<Habito> habitos = habitoService.listarPorUsuario(username);        List<Integer> dias = habitoService.diasDelMes();
+        List<Habito> habitos = habitoService.listarPorUsuario(username);
+        List<Integer> dias = habitoService.diasDelMes();
         Integer majorRacha = registroService.mejorRacha(username);
         Integer rachaActual = registroService.obtenerMayorRachaActual(username);
 
@@ -114,6 +120,73 @@ private final UsuarioService usuarioService;
 
         return response;
     }
+
+
+
+    // vistas
+
+    @GetMapping("/lista")
+    public String verTodos(Model model, Authentication auth) {
+
+        String username = auth.getName();
+
+        model.addAttribute("usuario",
+                usuarioService.obtenerUsuarioByNomusuario(username));
+
+        model.addAttribute("habitos",
+                habitoService.listarPorUsuario(username));
+
+        return "habitos/all-habits";
+    }
+
+    @GetMapping("/calendar")
+    public String verCalendario(Model model, Authentication auth){
+
+        String username = auth.getName();
+
+        List<Habito> habitos = habitoService.listarPorUsuario(username);
+
+
+
+        YearMonth yearMonth = YearMonth.now();
+        String mes = yearMonth.getMonth()
+                .getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
+
+
+        List<Integer> dias = new ArrayList<>();
+        for(int i = 1; i <= yearMonth.lengthOfMonth(); i++){
+            dias.add(i);
+        }
+
+
+        int primerDiaSemana = LocalDate.now()
+                .withDayOfMonth(1)
+                .getDayOfWeek()
+                .getValue();
+
+        List<String> diasSemana = List.of("L", "M", "M", "J", "V", "S", "D");
+        model.addAttribute("diasSemana", diasSemana);
+
+        model.addAttribute("offset", primerDiaSemana - 1);
+
+        Set<Integer> diasUnicos = new HashSet<>();
+
+        for (Habito h : habitos) {
+            diasUnicos.addAll(
+                    registroService.obtenerDiasMarcadosDelMes(h.getId())
+            );
+        }
+        model.addAttribute("usuario",
+                usuarioService.obtenerUsuarioByNomusuario(username));
+
+        model.addAttribute("habitos", habitos);
+        model.addAttribute("diasMes", dias);
+        model.addAttribute("mes", mes);
+        model.addAttribute("diasMarcados", diasUnicos);
+
+        return "habitos/calendar";
+    }
+
 
 
 

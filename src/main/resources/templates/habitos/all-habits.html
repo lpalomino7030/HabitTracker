@@ -7,16 +7,54 @@
 
 <body>
 
-<section>
-    <h2>Mis Hábitos</h2>
 
-    <ul>
-        <li th:each="habito : ${habitos}">
-            <span th:text="${habito.nombre}"></span>
-        </li>
-    </ul>
+    <section class="HabitView">
+        <div class="HabitListBox">
+            <div class="tituloLista">
+                <h3>Mis Hábitos</h3>
+                <a th:href="@{/habitos/nuevo}" class="btn btn-primary">
+                    Nuevo hábito
+                </a>
+            </div>
 
-</section>
+            <div class="panelHabits" th:each="h, iter : ${habitos}">
+                <div class="habiTrackerItem">
+                    <div class="iconHabit" th:classappend="' color-' + ${iter.index}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="lucide lucide-sport-shoe-icon lucide-sport-shoe">
+                            <path d="m15 10.42 4.8-5.07" />
+                            <path d="M19 18h3" />
+                            <path
+                                    d="M9.5 22 21.414 9.415A2 2 0 0 0 21.2 6.4l-5.61-4.208A1 1 0 0 0 14 3v2a2 2 0 0 1-1.394 1.906L8.677 8.053A1 1 0 0 0 8 9c-.155 6.393-2.082 9-4 9a2 2 0 0 0 0 4h14" />
+                        </svg>
+                    </div>
+                    <div class="habitTitle">
+                        <p class="notihabit" th:text="${h.nombre}"></p>
+                        <small class="gray" th:text="${h.descripcion}"></small>
+                    </div>
+<!--                    <div class="daysCount">-->
+<!--                        <p th:text="${#lists.size(semanas[h.id].?[completado])}">12</p>-->
+<!--                        <p>Dias</p>-->
+<!--                    </div>-->
+<!--                    <div class="weekHabitsBx" th:attr="data-id=${h.id}">-->
+<!--                        <div class="spancircleItem" th:each="dia : ${semanas[h.id]}">-->
+<!--                            <span th:class="${dia.completado} ? 'circle active' : 'circle'"></span>-->
+<!--                            <p th:text="${dia.dia}"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <a href="#" th:attr="data-id=${h.id}" class="btn btn-success btn-sm btn-marcar">-->
+<!--                            Marcar hoy-->
+<!--                        </a>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
 
 <script></script>
 

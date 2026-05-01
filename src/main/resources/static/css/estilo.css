@@ -250,7 +250,8 @@ ul li a {
 }
 
 .HabitListBox {
-  width: 60%;
+  /* width: 60%; tamaño recomendado*/
+ width: 100%;   /* se settea para ocupar todo el ancho */
   border-bottom: 15px;
   background: white;
   padding: 4px;

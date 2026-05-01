@@ -21,7 +21,6 @@ public class Habito {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-
     public Habito() {
     }
 
