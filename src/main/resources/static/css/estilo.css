@@ -527,3 +527,101 @@ ul li a {
   color: #ec5555;
   cursor: pointer;
 }
+
+.register {
+height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+        background: #151e3b;
+
+}
+
+
+.registercontainer {
+    width: 100%;
+    max-width: 380px;
+    padding: 30px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.registertitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+
+.registerform {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.registerfield {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+
+.registerlabel {
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #475569;
+}
+
+
+.registerinput {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+
+.registerinput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    outline: none;
+}
+
+.registerbutton {
+    margin-top: 10px;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+
+.registerbutton:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+
+.registerlink {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.registerlink:hover {
+    text-decoration: underline;
+}

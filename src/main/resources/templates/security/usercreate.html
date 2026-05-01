@@ -2,33 +2,51 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Crear cuenta</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" />
+
 </head>
 <body>
+<section class="register">
+    <div class="registercontainer">
 
-<h2>Registro de usuario</h2>
+        <h2 class="registertitle">Registro de usuario</h2>
 
-<form th:action="@{/security/user/register}" method="post" th:object="${user}">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <div>
-        <label>Usuario</label>
-        <input type="text" th:field="*{nombreUsuario}" required>
+        <form class="registerform"
+              th:action="@{/security/user/register}"
+              method="post"
+              th:object="${user}">
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <div class="registerfield">
+                <label class="registerlabel">Usuario</label>
+                <input class="registerinput" type="text" th:field="*{nomusuario}" required>
+            </div>
+
+            <div class="registerfield">
+                <label class="registerlabel">Nombres</label>
+                <input class="registerinput" type="text" th:field="*{nombres}" required>
+            </div>
+
+            <div class="registerfield">
+                <label class="registerlabel">Email</label>
+                <input class="registerinput" type="email" th:field="*{email}" required>
+            </div>
+
+            <div class="registerfield">
+                <label class="registerlabel">Contraseña</label>
+                <input class="registerinput" type="password" th:field="*{password}" required>
+            </div>
+
+            <button class="registerbutton" type="submit">Registrar</button>
+
+        </form>
+
+        <a class="registerlink" th:href="@{/login}">
+            Volver al login
+        </a>
+
     </div>
-
-    <div>
-        <label>Email</label>
-        <input type="email" th:field="*{email}" required>
-    </div>
-
-    <div>
-        <label>Contraseña</label>
-        <input type="password" th:field="*{password}" required>
-    </div>
-
-    <button type="submit">Registrar</button>
-
-</form>
-
-<a th:href="@{/login}">Volver al login</a>
-
+</section>
 </body>
 </html>

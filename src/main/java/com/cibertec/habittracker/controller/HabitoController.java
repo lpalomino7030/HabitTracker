@@ -33,6 +33,14 @@ private final UsuarioService usuarioService;
         this.usuarioService = usuarioService;
     }
 
+    public String obtenerMesActual(){
+        YearMonth yearMonth = YearMonth.now();
+        String mes = yearMonth.getMonth()
+                .getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
+
+        return mes;
+    }
+
     @GetMapping
     public String listar(Model model,  Authentication auth) {
         String username = auth.getName();
@@ -70,6 +78,7 @@ private final UsuarioService usuarioService;
                     registroService.obtenerDiasMarcadosDelMes(h.getId())
             );
         }
+        model.addAttribute("mes", obtenerMesActual());
 
         model.addAttribute("diasMarcados", diasUnicos);
 
@@ -146,12 +155,7 @@ private final UsuarioService usuarioService;
 
         List<Habito> habitos = habitoService.listarPorUsuario(username);
 
-
-
         YearMonth yearMonth = YearMonth.now();
-        String mes = yearMonth.getMonth()
-                .getDisplayName(TextStyle.FULL, new Locale("es", "ES"));
-
 
         List<Integer> dias = new ArrayList<>();
         for(int i = 1; i <= yearMonth.lengthOfMonth(); i++){
@@ -165,9 +169,6 @@ private final UsuarioService usuarioService;
                 .getValue();
 
         List<String> diasSemana = List.of("L", "M", "M", "J", "V", "S", "D");
-        model.addAttribute("diasSemana", diasSemana);
-
-        model.addAttribute("offset", primerDiaSemana - 1);
 
         Set<Integer> diasUnicos = new HashSet<>();
 
@@ -176,12 +177,17 @@ private final UsuarioService usuarioService;
                     registroService.obtenerDiasMarcadosDelMes(h.getId())
             );
         }
+
+        model.addAttribute("diasSemana", diasSemana);
+
+        model.addAttribute("offset", primerDiaSemana - 1);
+
         model.addAttribute("usuario",
                 usuarioService.obtenerUsuarioByNomusuario(username));
 
         model.addAttribute("habitos", habitos);
         model.addAttribute("diasMes", dias);
-        model.addAttribute("mes", mes);
+        model.addAttribute("mes", obtenerMesActual());
         model.addAttribute("diasMarcados", diasUnicos);
 
         return "habitos/calendar";

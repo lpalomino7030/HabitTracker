@@ -27,7 +27,7 @@ public class SecurityController {
     public String create(Model model){
         model.addAttribute("user",
                 new RegistroUsuarioDto());
-        return "security/user-create";
+        return "security/usercreate";
     }
 
     @GetMapping("/user/edit/{id}")
