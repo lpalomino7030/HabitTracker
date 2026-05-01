@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::title}, ~{::section}, ~{::script})">
+
+<head>
+    <title>Mis Hábitos</title>
+</head>
+
+<body>
+
+<section>
+    <h2>Mis Hábitos</h2>
+
+    <ul>
+        <li th:each="habito : ${habitos}">
+            <span th:text="${habito.nombre}"></span>
+        </li>
+    </ul>
+
+</section>
+
+<script></script>
+
+</body>
+</html>
